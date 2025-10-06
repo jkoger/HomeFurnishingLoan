@@ -1,10 +1,148 @@
-function Calculator() {
+import { useMemo, useState } from "react";
+import "./Calculator.css";
+import circle_plus from "../assets/circle_plus.png";
+import trash from "../assets/trash.png";
+
+const CALC_TITLE = "Koosta soovinimekiri ja vaata oma uue sisustuse kuumakset";
+const LABEL_PRODUCT = "TOODE";
+const LABEL_PRICE = "HIND";
+const ADD_ITEM = "Lisa toode";
+const REMOVE_ITEM = "Kustuta";
+const CTA_TEXT = "Taotle sisustuslaenu";
+const TERMS_TEXT = "Tutvu tingimustega";
+const CTA_URL = "https://www.lhv.ee/et/sisustuslaen/taotlus";
+const TERMS_URL = "https://www.lhv.ee/et/sisustuslaen#tingimused-tab";
+
+export default function Calculator() {
+  const [items, setItems] = useState([
+    { name: "Diivan", price: 500 },
+    { name: "Lamp", price: 85 },
+  ]);
+
+  const total = useMemo(
+    () =>
+      items.reduce((sum, it) => {
+        const val = parseFloat(String(it.price).replace(",", "."));
+        return sum + (Number.isFinite(val) ? val : 0);
+      }, 0),
+    [items],
+  );
+
+  const updateItem = (idx, key, value) => {
+    setItems((prev) =>
+      prev.map((it, i) => (i === idx ? { ...it, [key]: value } : it)),
+    );
+  };
+
+  const addItem = () => {
+    setItems((prev) => [...prev, { name: "", price: "" }]);
+  };
+
+  const removeLast = () => {
+    setItems((prev) => {
+      if (prev.length > 1) return prev.slice(0, -1);
+      return [{ name: "", price: "" }];
+    });
+  };
+
   return (
-    <div>
-      <div>Calculator</div>
-      <div>Here will be located Calculator container</div>
-    </div>
+    <section className="calc-wrap" aria-labelledby="calc-title">
+      <header className="calc-title-row">
+        <h2 id="calc-title" className="calc-title">
+          {CALC_TITLE}
+        </h2>
+      </header>
+
+      <div className="calc-grid">
+        <div className="calc-fields">
+          <div className="cols-header">
+            <span className="col-label">{LABEL_PRODUCT}</span>
+            <span className="col-label">{LABEL_PRICE}</span>
+          </div>
+
+          <div className="cols">
+            <div className="col col-names">
+              {items.map((it, i) => (
+                <label className="underline" key={`n-${i}`}>
+                  <input
+                    className="input"
+                    type="text"
+                    value={it.name}
+                    placeholder=""
+                    aria-label={`${LABEL_PRODUCT} ${i + 1}`}
+                    onChange={(e) => updateItem(i, "name", e.target.value)}
+                  />
+                </label>
+              ))}
+            </div>
+
+            <div className="col col-prices">
+              {items.map((it, i) => (
+                <label className="underline price" key={`p-${i}`}>
+                  <input
+                    className="input input-price"
+                    inputMode="decimal"
+                    type="text"
+                    value={it.price}
+                    placeholder=""
+                    aria-label={`${LABEL_PRICE} ${i + 1}`}
+                    onChange={(e) => updateItem(i, "price", e.target.value)}
+                  />
+                  <span className="euro" aria-hidden>
+                    €
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="calc-actions">
+            <button
+              type="button"
+              className="link-with-icon"
+              onClick={addItem}
+              aria-label={ADD_ITEM}
+            >
+              <img src={circle_plus} alt="" className="icon" />
+              <span className="link-text">{ADD_ITEM}</span>
+            </button>
+
+            <button
+              type="button"
+              className="link-with-icon"
+              onClick={removeLast}
+              disabled={items.length <= 1}
+              aria-label={REMOVE_ITEM}
+            >
+              <img src={trash} alt="" className="icon" />
+              <span className="link-text">{REMOVE_ITEM}</span>
+            </button>
+          </div>
+        </div>
+
+        <aside className="calc-summary" aria-live="polite">
+          <div className="total-wrap">
+            <div className="total">
+              {Intl.NumberFormat("et-EE").format(total)} €
+            </div>
+          </div>
+
+          <div className="cta-wrap">
+            <a href={CTA_URL} className="cta-btn">
+              {CTA_TEXT}
+            </a>
+
+            <a
+              className="terms-link"
+              href={TERMS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {TERMS_TEXT}
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
   );
 }
-
-export default Calculator;
