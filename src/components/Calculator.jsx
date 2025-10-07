@@ -73,8 +73,8 @@ export default function Calculator() {
     <section className="calc-wrap" aria-labelledby="calc-title">
       <header className="calc-title-row">
         <h2 id="calc-title" className="calc-title">
-          <span className="title-bold">{CALC_TITLE_BOLD}</span>{" "}
-          <span className="title-light">{CALC_TITLE_LIGHT}</span>
+          <span className="calc-title-bold">{CALC_TITLE_BOLD}</span>{" "}
+          <span className="calc-title-light">{CALC_TITLE_LIGHT}</span>
         </h2>
       </header>
 

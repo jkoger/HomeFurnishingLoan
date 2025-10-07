@@ -11,6 +11,7 @@
   flex-direction: column;
   align-items: center;
   gap: 40px;
+
   color: #262633;
 }
 
@@ -18,17 +19,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 614px;
-  height: 69px;
+  width: 100%;
+  max-width: 614px;
 }
 .calc-title {
-  grid-area: title;
   margin: 0;
   text-align: center;
-  font-weight: 700;
-  font-size: 28px;
   line-height: 34px;
   letter-spacing: -0.005em;
+  max-width: 456px;
+}
+.calc-title-light {
+  font-weight: 300;
+  font-size: 28px;
+}
+.calc-title-bold {
+  font-weight: 700;
+  font-size: 28px;
 }
 
 .calc-grid {
@@ -46,23 +53,18 @@
   width: 374px;
 }
 
-.cols-header {
+.cols-header,
+.cols {
   display: grid;
   grid-template-columns: 212px 132px;
   gap: 30px;
-  align-items: center;
 }
+
 .col-label {
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
   color: #6c6972;
-}
-
-.cols {
-  display: grid;
-  grid-template-columns: 212px 132px;
-  gap: 30px;
 }
 
 .col {
@@ -71,7 +73,7 @@
   gap: 16px;
 }
 
-.underline {
+.calc-wrap .underline {
   position: relative;
   display: flex;
   align-items: center;
@@ -79,7 +81,7 @@
   border-bottom: 1px solid #c6c4c7;
   height: 28px;
 }
-.input {
+.calc-wrap .input {
   width: 100%;
   border: 0;
   outline: none;
@@ -88,16 +90,16 @@
   line-height: 24px;
   color: #262633;
 }
-.input::placeholder {
+.calc-wrap .input::placeholder {
   color: #89868d;
 }
 
-.underline.price {
+.calc-wrap .underline.price {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
 }
-.euro {
+.calc-wrap .euro {
   color: #89868d;
   font-size: 16px;
   line-height: 24px;
@@ -125,12 +127,10 @@
   height: 20px;
   object-fit: contain;
 }
-
 .link-with-icon[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
 }
-
 .link-with-icon .link-text {
   font-weight: 500;
   font-size: 14px;
@@ -150,7 +150,6 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  height: 48px;
 }
 .total {
   font-weight: 200;
@@ -184,6 +183,7 @@
   font-size: 14px;
   line-height: 20px;
   cursor: pointer;
+  text-decoration: none;
 }
 .terms-link {
   position: relative;
@@ -214,13 +214,19 @@
     padding: 40px 24px;
     border-radius: 0;
   }
-
   .calc-title-row {
     width: 327px;
     height: 103px;
   }
   .calc-title {
     width: 327px;
+  }
+
+  .calc-title-row {
+    max-width: 327px;
+  }
+  .calc-title {
+    max-width: 327px;
   }
 
   .calc-grid {
@@ -239,10 +245,6 @@
     gap: 16px;
   }
 
-  .calc-actions {
-    justify-content: space-between;
-  }
-
   .calc-summary {
     width: 327px;
   }
@@ -252,4 +254,9 @@
   .cta-btn {
     width: 327px;
   }
+}
+
+html,
+body {
+  overflow-x: hidden;
 }
