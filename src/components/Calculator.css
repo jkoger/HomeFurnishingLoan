@@ -158,6 +158,7 @@
   line-height: 48px;
   letter-spacing: -0.015em;
   text-align: center;
+  white-space: nowrap;
 }
 
 .cta-wrap {

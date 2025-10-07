@@ -3,7 +3,7 @@ import "./Info.css";
 import infoImage from "../assets/infoImage.png";
 import cornerFlip from "../assets/cornerFlip.png";
 
-const LHV_URL = "https://www.lhv.ee/et/sisustuslaen";
+const LHV_INFO_URL = "https://www.lhv.ee/et/sisustuslaen#lisateave-tab";
 const TITLE = "Kas sinu diivan on oma aja ära elanud?";
 const BODY =
   "Oled väsinud segadusest, kus asjadel pole oma kohta. Oled unistanud ilusast lihtsast uuest sisekujundusest, aga kõik tundub korraga liiga kallis? LHV sisustuslaenuga saad oma unistused ellu viia juba täna.";
@@ -42,7 +42,7 @@ function InfoLink({ stopFlip = false, ariaLabel = LINK_TEXT }) {
   return (
     <a
       className="info-link"
-      href={LHV_URL}
+      href={LHV_INFO_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}

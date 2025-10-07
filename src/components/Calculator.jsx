@@ -45,6 +45,29 @@ export default function Calculator() {
     });
   };
 
+  const sanitizePriceInput = (raw) => {
+    if (!raw) return "";
+    let s = String(raw).replace(/\s+/g, "").replace(",", ".");
+    s = s.replace(/[^\d.]/g, "");
+    const firstDot = s.indexOf(".");
+    if (firstDot !== -1) {
+      s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, "");
+    }
+    const [intPart, decPart] = s.split(".");
+    return decPart !== undefined
+      ? `${intPart}.${decPart.slice(0, 2)}`
+      : intPart;
+  };
+
+  const formatEtNumber = (val) => {
+    const n = parseFloat(val);
+    if (!Number.isFinite(n)) return "";
+    return new Intl.NumberFormat("et-EE", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    }).format(n);
+  };
+
   return (
     <section className="calc-wrap" aria-labelledby="calc-title">
       <header className="calc-title-row">
@@ -83,10 +106,19 @@ export default function Calculator() {
                     className="input input-price"
                     inputMode="decimal"
                     type="text"
+                    pattern="^\d+([.,]\d{0,2})?$"
                     value={it.price}
                     placeholder=""
                     aria-label={`${LABEL_PRICE} ${i + 1}`}
-                    onChange={(e) => updateItem(i, "price", e.target.value)}
+                    onChange={(e) => {
+                      const v = sanitizePriceInput(e.target.value);
+                      updateItem(i, "price", v);
+                    }}
+                    onBlur={(e) => {
+                      const v = sanitizePriceInput(e.target.value);
+                      if (v === "") return;
+                      updateItem(i, "price", formatEtNumber(v));
+                    }}
                   />
                   <span className="euro" aria-hidden>
                     €
@@ -123,7 +155,7 @@ export default function Calculator() {
         <aside className="calc-summary" aria-live="polite">
           <div className="total-wrap">
             <div className="total">
-              {Intl.NumberFormat("et-EE").format(total)} €
+              {Intl.NumberFormat("et-EE").format(total)}&nbsp;€
             </div>
           </div>
 
