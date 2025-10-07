@@ -1,12 +1,29 @@
-# React + Vite
+# Home Furnishing Loan
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a single-page app that showcases LHV’s home furnishing loan offer. The page highlights key information, provides an interactive wishlist calculator, and lists contact options for support.
 
-Currently, two official plugins are available:
+## Features
+- Information card with responsive flip-tile for mobile users and link to Loan Additional information.
+- Loan calculator that totals a configurable wishlist of items with quick links to Loan Application and Loan Terms.
+- Contact section with quick links to phone and email support.
+- CSS architecture follows the BEM convention and matches values provided in the Figma design reference.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+1. Project requires Node.js 18+ installed.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+4. Build a production bundle (optional):
+   ```bash
+   npm run build
+   ```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tooling
+- Vite for development server and bundling.
+- React 18 for UI components.
+- ESLint with the default Vite React config.
