@@ -3,7 +3,8 @@ import "./Calculator.css";
 import circle_plus from "../assets/circle_plus.png";
 import trash from "../assets/trash.png";
 
-const CALC_TITLE = "Koosta soovinimekiri ja vaata oma uue sisustuse kuumakset";
+const CALC_TITLE_BOLD = "Koosta soovinimekiri";
+const CALC_TITLE_LIGHT = "ja vaata oma uue sisustuse kuumakset";
 const LABEL_PRODUCT = "TOODE";
 const LABEL_PRICE = "HIND";
 const ADD_ITEM = "Lisa toode";
@@ -72,7 +73,8 @@ export default function Calculator() {
     <section className="calc-wrap" aria-labelledby="calc-title">
       <header className="calc-title-row">
         <h2 id="calc-title" className="calc-title">
-          {CALC_TITLE}
+          <span className="title-bold">{CALC_TITLE_BOLD}</span>{" "}
+          <span className="title-light">{CALC_TITLE_LIGHT}</span>
         </h2>
       </header>
 

@@ -1,6 +1,6 @@
 .info-wrap {
   position: relative;
-  width: 861px;
+  width: 942px;
   margin: 0 auto;
   text-align: left;
 }
@@ -13,6 +13,7 @@
   border-radius: 4px;
 
   display: flex;
+  right: -80px;
   flex-direction: column;
   align-items: flex-start;
   gap: 13px;
@@ -24,14 +25,12 @@
   z-index: 1;
 
   text-align: left;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .info-img {
   position: absolute;
   left: 0;
-  bottom: -34px;
-  left: -34px;
+  bottom: -10px;
   top: auto;
   width: 294px;
   height: 294px;
@@ -41,7 +40,7 @@
 }
 
 .info-title {
-  margin: 0;
+  margin-top: 0;
   max-width: 527px;
   font-weight: 700;
   font-size: 18px;
@@ -52,6 +51,7 @@
 
 .info-text {
   margin: 0;
+  margin-bottom: 20px;
   max-width: 486px;
   font-weight: 400;
   font-size: 16px;
@@ -88,8 +88,8 @@
 }
 
 .info-link-icon {
-  width: 16px;
-  height: 16px;
+  width: 9px;
+  height: 9px;
   transform: rotate(270deg);
   flex: none;
   stroke: #262633;
@@ -159,7 +159,6 @@
 .tile-title {
   margin: 0;
   width: 203px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
   font-size: 18px;
   line-height: 22px;
@@ -216,7 +215,7 @@
   cursor: pointer;
 }
 
-@media (max-width: 480px) {
+@media (orientation: portrait) {
   .info-card,
   .info-img {
     display: none;
@@ -236,7 +235,6 @@
     margin: 40px auto 12px;
     text-align: center;
 
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 300;
     font-size: 28px;
     line-height: 34px;

@@ -14,7 +14,10 @@ const EMAIL_HREF = "mailto:info@lhv.ee";
 
 function ContactRow({ icon, label, href, underline = false }) {
   return (
-    <a className={`contact-row${underline ? " underline" : ""}`} href={href}>
+    <a
+      className={`contact-row${underline ? " contact-row--underline" : ""}`}
+      href={href}
+    >
       <img className="contact-row-icon" src={icon} alt="" />
       <span className="contact-row-text">{label}</span>
     </a>

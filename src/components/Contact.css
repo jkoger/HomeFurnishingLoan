@@ -58,7 +58,6 @@
   width: 352px;
   height: 26px;
   color: #262633;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 26px;
 }
 .title-light {
@@ -75,10 +74,10 @@
   width: 352px;
   height: 72px;
   color: #262633;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
+  text-align: left;
 }
 
 .contact-right {
@@ -101,12 +100,11 @@
 
   color: #262633;
   text-decoration: none;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   font-size: 22px;
   line-height: 27px;
 }
-.contact-row.underline .contact-row-text {
+.contact-row--underline .contact-row-text {
   text-decoration: underline;
 }
 
@@ -116,7 +114,7 @@
   object-fit: contain;
 }
 
-@media (max-width: 480px) {
+@media (orientation: portrait) {
   .contact-wrap {
     width: 100%;
     padding: 0 20px;
@@ -124,16 +122,22 @@
   }
 
   .contact-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "badge"
+      "title"
+      "rows"
+      "text";
+    row-gap: 24px;
     width: 320px;
     height: auto;
     margin: 0 auto;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 48px;
     padding: 24px 16px;
   }
 
   .contact-left {
+    display: contents;
     width: 100%;
     height: auto;
     flex-direction: column;
@@ -143,6 +147,8 @@
   }
 
   .support-badge {
+    grid-area: badge;
+    justify-self: center;
     width: 64px;
     height: 64px;
   }
@@ -152,22 +158,28 @@
   }
 
   .contact-copy {
+    display: contents;
     width: 100%;
     align-items: center;
     gap: 8px;
     height: auto;
   }
   .contact-title {
+    grid-area: title;
+    text-align: center;
     width: auto;
     line-height: 26px;
   }
   .contact-text {
+    grid-area: text;
+    text-align: center;
     width: auto;
     height: auto;
     max-width: 280px;
   }
 
   .contact-right {
+    grid-area: rows;
     width: 100%;
     height: auto;
     flex-direction: column;
