@@ -1,11 +1,10 @@
-/* ============ DESKTOP ============ */
-.contact-wrap {
+.contact {
   width: 100%;
   max-width: 942px;
   margin: 0 auto;
 }
 
-.contact-card {
+.contact__card {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,14 +16,14 @@
   width: 100%;
 }
 
-.contact-left {
+.contact__left {
   display: flex;
   align-items: center;
   gap: 24px;
   width: 456px;
 }
 
-.support-badge {
+.contact__badge {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -32,36 +31,41 @@
   align-items: center;
   justify-content: center;
 }
-.support-badge-img {
+
+.contact__badge-image {
   width: 80px;
   height: 80px;
   object-fit: contain;
 }
 
-.contact-copy {
+.contact__copy {
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 352px;
 }
 
-.contact-title {
+.contact__title {
   margin: 0;
   width: 100%;
   color: #262633;
   line-height: 26px;
   text-align: left;
 }
-.title-light {
-  font-weight: 300;
-  font-size: 22px;
-}
-.title-bold {
-  font-weight: 700;
+
+.contact__title-part {
   font-size: 22px;
 }
 
-.contact-text {
+.contact__title-part--light {
+  font-weight: 300;
+}
+
+.contact__title-part--bold {
+  font-weight: 700;
+}
+
+.contact__text {
   margin: 0;
   max-width: 352px;
   color: #262633;
@@ -71,14 +75,14 @@
   text-align: left;
 }
 
-.contact-right {
+.contact__links {
   display: flex;
   align-items: flex-start;
   gap: 48px;
   width: 456px;
 }
 
-.contact-row {
+.contact__row {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -89,24 +93,25 @@
   font-size: 22px;
   line-height: 27px;
 }
-.contact-row--underline .contact-row-text {
+
+.contact__row--underline .contact__row-text {
   text-decoration: underline;
 }
 
-.contact-row-icon {
+.contact__row-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
 }
 
 @media (orientation: portrait) {
-  .contact-wrap {
+  .contact {
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
   }
 
-  .contact-card {
+  .contact__card {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -121,29 +126,30 @@
     padding: 24px 16px;
   }
 
-  .contact-left,
-  .contact-copy {
+  .contact__left,
+  .contact__copy {
     display: contents;
   }
 
-  .support-badge {
+  .contact__badge {
     grid-area: badge;
     justify-self: center;
     width: 64px;
     height: 64px;
   }
-  .support-badge-img {
+
+  .contact__badge-image {
     width: 64px;
     height: 64px;
   }
 
-  .contact-title {
+  .contact__title {
     grid-area: title;
     text-align: center;
     width: auto;
   }
 
-  .contact-right {
+  .contact__links {
     grid-area: rows;
     width: 100%;
     display: flex;
@@ -152,17 +158,18 @@
     gap: 16px;
   }
 
-  .contact-row {
+  .contact__row {
     width: auto;
     font-size: 18px;
     line-height: 24px;
   }
-  .contact-row-icon {
+
+  .contact__row-icon {
     width: 20px;
     height: 20px;
   }
 
-  .contact-text {
+  .contact__text {
     grid-area: text;
     text-align: center;
     max-width: 280px;

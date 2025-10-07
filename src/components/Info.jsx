@@ -41,15 +41,15 @@ function InfoLink({ stopFlip = false, ariaLabel = LINK_TEXT }) {
   const onClick = (e) => stopFlip && e.stopPropagation();
   return (
     <a
-      className="info-link"
+      className="info__link"
       href={LHV_INFO_URL}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
       onClick={onClick}
     >
-      <span className="info-link-text">{LINK_TEXT}</span>
-      <ArrowIcon className="info-link-icon" />
+      <span className="info__link-text">{LINK_TEXT}</span>
+      <ArrowIcon className="info__link-icon" />
     </a>
   );
 }
@@ -59,32 +59,36 @@ export default function Info() {
   const toggleFlip = () => setFlipped((f) => !f);
 
   return (
-    <div className="info-wrap">
-      <img className="info-img" src={infoImage} alt="" />
-      <section className="info-card">
-        <div className="info-content">
-          <h3 className="info-title">{TITLE}</h3>
-          <p className="info-text">{BODY}</p>
+    <div className="info">
+      <img className="info__image" src={infoImage} alt="" />
+      <section className="info__card">
+        <div className="info__content">
+          <h3 className="info__title">{TITLE}</h3>
+          <p className="info__text">{BODY}</p>
           <InfoLink />
         </div>
       </section>
 
-      <h2 className="info-mobile-heading">{MOBILE_HEADING}</h2>
+      <h2 className="info__mobile-heading">{MOBILE_HEADING}</h2>
       <div
-        className="info-tile"
+        className="info__tile"
         aria-live="polite"
         role="button"
         tabIndex={0}
         onClick={toggleFlip}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleFlip()}
       >
-        <div className={`flip-inner ${flipped ? "is-flipped" : ""}`}>
-          <div className="flip-face flip-front">
-            <img className="tile-img" src={infoImage} alt="" />
-            <div className="tile-banner">
-              <h5 className="tile-title">{TITLE}</h5>
+        <div
+          className={`info__flip-inner ${
+            flipped ? "info__flip-inner--flipped" : ""
+          }`}
+        >
+          <div className="info__flip-face info__flip-face--front">
+            <img className="info__tile-image" src={infoImage} alt="" />
+            <div className="info__tile-banner">
+              <h5 className="info__tile-title">{TITLE}</h5>
               <button
-                className="tile-corner"
+                className="info__tile-corner"
                 type="button"
                 aria-label="Pööra kaart"
                 onClick={(e) => {
@@ -92,14 +96,18 @@ export default function Info() {
                   toggleFlip();
                 }}
               >
-                <img src={cornerFlip} alt="" className="tile-corner-img" />
+                <img
+                  src={cornerFlip}
+                  alt=""
+                  className="info__tile-corner-image"
+                />
               </button>
             </div>
           </div>
 
-          <div className="flip-face flip-back">
-            <div className="tile-back-content">
-              <p className="tile-text">{BODY}</p>
+          <div className="info__flip-face info__flip-face--back">
+            <div className="info__tile-back-content">
+              <p className="info__tile-text">{BODY}</p>
               <InfoLink stopFlip />
             </div>
           </div>

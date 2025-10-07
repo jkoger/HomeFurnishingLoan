@@ -70,27 +70,31 @@ export default function Calculator() {
   };
 
   return (
-    <section className="calc-wrap" aria-labelledby="calc-title">
-      <header className="calc-title-row">
-        <h2 id="calc-title" className="calc-title">
-          <span className="calc-title-bold">{CALC_TITLE_BOLD}</span>{" "}
-          <span className="calc-title-light">{CALC_TITLE_LIGHT}</span>
+    <section className="calculator" aria-labelledby="calc-title">
+      <header className="calculator__title-row">
+        <h2 id="calc-title" className="calculator__title">
+          <span className="calculator__title-part calculator__title-part--bold">
+            {CALC_TITLE_BOLD}
+          </span>{" "}
+          <span className="calculator__title-part calculator__title-part--light">
+            {CALC_TITLE_LIGHT}
+          </span>
         </h2>
       </header>
 
-      <div className="calc-grid">
-        <div className="calc-fields">
-          <div className="cols-header">
-            <span className="col-label">{LABEL_PRODUCT}</span>
-            <span className="col-label">{LABEL_PRICE}</span>
+      <div className="calculator__grid">
+        <div className="calculator__fields">
+          <div className="calculator__columns-header">
+            <span className="calculator__column-label">{LABEL_PRODUCT}</span>
+            <span className="calculator__column-label">{LABEL_PRICE}</span>
           </div>
 
-          <div className="cols">
-            <div className="col col-names">
+          <div className="calculator__columns">
+            <div className="calculator__column">
               {items.map((it, i) => (
-                <label className="underline" key={`n-${i}`}>
+                <label className="calculator__input-row" key={`n-${i}`}>
                   <input
-                    className="input"
+                    className="calculator__input"
                     type="text"
                     value={it.name}
                     placeholder=""
@@ -101,11 +105,14 @@ export default function Calculator() {
               ))}
             </div>
 
-            <div className="col col-prices">
+            <div className="calculator__column">
               {items.map((it, i) => (
-                <label className="underline price" key={`p-${i}`}>
+                <label
+                  className="calculator__input-row calculator__input-row--price"
+                  key={`p-${i}`}
+                >
                   <input
-                    className="input input-price"
+                    className="calculator__input calculator__input--price"
                     inputMode="decimal"
                     type="text"
                     pattern="^\d+([.,]\d{0,2})?$"
@@ -122,7 +129,7 @@ export default function Calculator() {
                       updateItem(i, "price", formatEtNumber(v));
                     }}
                   />
-                  <span className="euro" aria-hidden>
+                  <span className="calculator__currency" aria-hidden>
                     €
                   </span>
                 </label>
@@ -130,44 +137,54 @@ export default function Calculator() {
             </div>
           </div>
 
-          <div className="calc-actions">
+          <div className="calculator__actions">
             <button
               type="button"
-              className="link-with-icon"
+              className="calculator__action-link"
               onClick={addItem}
               aria-label={ADD_ITEM}
             >
-              <img src={circle_plus} alt="" className="icon" />
-              <span className="link-text">{ADD_ITEM}</span>
+              <img
+                src={circle_plus}
+                alt=""
+                className="calculator__action-link-icon"
+              />
+              <span className="calculator__action-link-text">{ADD_ITEM}</span>
             </button>
 
             <button
               type="button"
-              className="link-with-icon"
+              className="calculator__action-link"
               onClick={removeLast}
               disabled={items.length <= 1}
               aria-label={REMOVE_ITEM}
             >
-              <img src={trash} alt="" className="icon" />
-              <span className="link-text">{REMOVE_ITEM}</span>
+              <img
+                src={trash}
+                alt=""
+                className="calculator__action-link-icon"
+              />
+              <span className="calculator__action-link-text">
+                {REMOVE_ITEM}
+              </span>
             </button>
           </div>
         </div>
 
-        <aside className="calc-summary" aria-live="polite">
-          <div className="total-wrap">
-            <div className="total">
+        <aside className="calculator__summary" aria-live="polite">
+          <div className="calculator__total">
+            <div className="calculator__total-value">
               {Intl.NumberFormat("et-EE").format(total)}&nbsp;€
             </div>
           </div>
 
-          <div className="cta-wrap">
-            <a href={CTA_URL} className="cta-btn">
+          <div className="calculator__cta">
+            <a href={CTA_URL} className="calculator__cta-button">
               {CTA_TEXT}
             </a>
 
             <a
-              className="terms-link"
+              className="calculator__terms-link"
               href={TERMS_URL}
               target="_blank"
               rel="noopener noreferrer"
