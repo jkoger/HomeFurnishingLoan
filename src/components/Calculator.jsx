@@ -14,18 +14,54 @@ const TERMS_TEXT = "Tutvu tingimustega";
 const CTA_URL = "https://www.lhv.ee/et/sisustuslaen/taotlus";
 const TERMS_URL = "https://www.lhv.ee/et/sisustuslaen#tingimused-tab";
 
+const PRICE_DISPLAY_FORMATTER = new Intl.NumberFormat("et-EE", {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
+const sanitizePriceInput = (raw) => {
+  if (!raw) return "";
+  let s = String(raw).replace(/\s+/g, "").replace(",", ".");
+  s = s.replace(/[^\d.]/g, "");
+  const firstDot = s.indexOf(".");
+  if (firstDot !== -1) {
+    s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, "");
+  }
+  const [intPart, decPart] = s.split(".");
+  return decPart !== undefined ? `${intPart}.${decPart.slice(0, 2)}` : intPart;
+};
+
+const parseSanitizedToCents = (value) => {
+  if (!value) return 0;
+  const [intPartRaw, decPartRaw] = String(value).split(".");
+  const intPart = Number.parseInt(intPartRaw, 10);
+  if (!Number.isFinite(intPart)) return 0;
+
+  if (!decPartRaw) {
+    return intPart * 100;
+  }
+
+  const decimalsString = decPartRaw.padEnd(2, "0").slice(0, 2);
+  const decimals = Number.parseInt(decimalsString, 10);
+
+  return intPart * 100 + (Number.isFinite(decimals) ? decimals : 0);
+};
+
+const formatCents = (cents) => PRICE_DISPLAY_FORMATTER.format(cents / 100);
+
 export default function Calculator() {
   const [items, setItems] = useState([
     { name: "Diivan", price: 500 },
     { name: "Lamp", price: 85 },
   ]);
 
-  const total = useMemo(
+  const totalCents = useMemo(
     () =>
-      items.reduce((sum, it) => {
-        const val = parseFloat(String(it.price).replace(",", "."));
-        return sum + (Number.isFinite(val) ? val : 0);
-      }, 0),
+      items.reduce(
+        (sum, item) =>
+          sum + parseSanitizedToCents(sanitizePriceInput(item.price)),
+        0,
+      ),
     [items],
   );
 
@@ -46,27 +82,9 @@ export default function Calculator() {
     });
   };
 
-  const sanitizePriceInput = (raw) => {
-    if (!raw) return "";
-    let s = String(raw).replace(/\s+/g, "").replace(",", ".");
-    s = s.replace(/[^\d.]/g, "");
-    const firstDot = s.indexOf(".");
-    if (firstDot !== -1) {
-      s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, "");
-    }
-    const [intPart, decPart] = s.split(".");
-    return decPart !== undefined
-      ? `${intPart}.${decPart.slice(0, 2)}`
-      : intPart;
-  };
-
   const formatEtNumber = (val) => {
-    const n = parseFloat(val);
-    if (!Number.isFinite(n)) return "";
-    return new Intl.NumberFormat("et-EE", {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }).format(n);
+    const cents = parseSanitizedToCents(val);
+    return formatCents(cents);
   };
 
   return (
@@ -115,18 +133,21 @@ export default function Calculator() {
                     className="calculator__input calculator__input--price"
                     inputMode="decimal"
                     type="text"
-                    pattern="^\d+([.,]\d{0,2})?$"
+                    pattern="^\\d+([.,]\\d{0,2})?$"
                     value={it.price}
                     placeholder=""
                     aria-label={`${LABEL_PRICE} ${i + 1}`}
                     onChange={(e) => {
-                      const v = sanitizePriceInput(e.target.value);
-                      updateItem(i, "price", v);
+                      const sanitized = sanitizePriceInput(e.target.value);
+                      updateItem(i, "price", sanitized);
                     }}
                     onBlur={(e) => {
-                      const v = sanitizePriceInput(e.target.value);
-                      if (v === "") return;
-                      updateItem(i, "price", formatEtNumber(v));
+                      const sanitized = sanitizePriceInput(e.target.value);
+                      if (sanitized === "") {
+                        updateItem(i, "price", "");
+                        return;
+                      }
+                      updateItem(i, "price", formatEtNumber(sanitized));
                     }}
                   />
                   <span className="calculator__currency" aria-hidden>
@@ -174,7 +195,7 @@ export default function Calculator() {
         <aside className="calculator__summary" aria-live="polite">
           <div className="calculator__total">
             <div className="calculator__total-value">
-              {Intl.NumberFormat("et-EE").format(total)}&nbsp;€
+              {formatCents(totalCents)}&nbsp;€
             </div>
           </div>
 

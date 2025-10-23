@@ -72,11 +72,17 @@ export default function Info() {
       <h2 className="info__mobile-heading">{MOBILE_HEADING}</h2>
       <div
         className="info__tile"
-        aria-live="polite"
         role="button"
         tabIndex={0}
+        aria-pressed={flipped}
+        aria-label="Pööra kaart"
         onClick={toggleFlip}
-        onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && toggleFlip()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            toggleFlip();
+          }
+        }}
       >
         <div
           className={`info__flip-inner ${
