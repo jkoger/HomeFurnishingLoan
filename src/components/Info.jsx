@@ -2,13 +2,10 @@ import { useState } from "react";
 import "./Info.css";
 import infoImage from "../assets/infoImage.png";
 import cornerFlip from "../assets/cornerFlip.png";
+import { useIsMobile } from "../hooks/useIsMobile";
+import etLocale from "../localization/default-et.json";
 
-const LHV_INFO_URL = "https://www.lhv.ee/et/sisustuslaen#lisateave-tab";
-const TITLE = "Kas sinu diivan on oma aja ära elanud?";
-const BODY =
-  "Oled väsinud segadusest, kus asjadel pole oma kohta. Oled unistanud ilusast lihtsast uuest sisekujundusest, aga kõik tundub korraga liiga kallis? LHV sisustuslaenuga saad oma unistused ellu viia juba täna.";
-const LINK_TEXT = "Loe lisa";
-const MOBILE_HEADING = "Sisustuslaen";
+const { LHV_INFO_URL, TITLE, BODY, LINK_TEXT, MOBILE_HEADING } = etLocale;
 
 function ArrowIcon({ className }) {
   return (
@@ -55,20 +52,12 @@ function InfoLink({ stopFlip = false, ariaLabel = LINK_TEXT }) {
 }
 
 export default function Info() {
+  const isMobile = useIsMobile();
   const [flipped, setFlipped] = useState(false);
   const toggleFlip = () => setFlipped((f) => !f);
 
-  return (
+  return isMobile ? (
     <div className="info">
-      <img className="info__image" src={infoImage} alt="" />
-      <section className="info__card">
-        <div className="info__content">
-          <h3 className="info__title">{TITLE}</h3>
-          <p className="info__text">{BODY}</p>
-          <InfoLink />
-        </div>
-      </section>
-
       <h2 className="info__mobile-heading">{MOBILE_HEADING}</h2>
       <div
         className="info__tile"
@@ -119,6 +108,17 @@ export default function Info() {
           </div>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="info">
+      <img className="info__image" src={infoImage} alt="" />
+      <section className="info__card">
+        <div className="info__content">
+          <h3 className="info__title">{TITLE}</h3>
+          <p className="info__text">{BODY}</p>
+          <InfoLink />
+        </div>
+      </section>
     </div>
   );
 }

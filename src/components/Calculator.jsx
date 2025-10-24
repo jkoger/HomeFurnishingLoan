@@ -2,52 +2,25 @@ import { useMemo, useState } from "react";
 import "./Calculator.css";
 import circle_plus from "../assets/circle_plus.png";
 import trash from "../assets/trash.png";
+import {
+  formatCents,
+  parseSanitizedToCents,
+  sanitizePriceInput,
+} from "../utils/sanitaze";
+import etLocale from "../localization/default-et.json";
 
-const CALC_TITLE_BOLD = "Koosta soovinimekiri";
-const CALC_TITLE_LIGHT = "ja vaata oma uue sisustuse kuumakset";
-const LABEL_PRODUCT = "TOODE";
-const LABEL_PRICE = "HIND";
-const ADD_ITEM = "Lisa toode";
-const REMOVE_ITEM = "Kustuta";
-const CTA_TEXT = "Taotle sisustuslaenu";
-const TERMS_TEXT = "Tutvu tingimustega";
-const CTA_URL = "https://www.lhv.ee/et/sisustuslaen/taotlus";
-const TERMS_URL = "https://www.lhv.ee/et/sisustuslaen#tingimused-tab";
-
-const PRICE_DISPLAY_FORMATTER = new Intl.NumberFormat("et-EE", {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
-});
-
-const sanitizePriceInput = (raw) => {
-  if (!raw) return "";
-  let s = String(raw).replace(/\s+/g, "").replace(",", ".");
-  s = s.replace(/[^\d.]/g, "");
-  const firstDot = s.indexOf(".");
-  if (firstDot !== -1) {
-    s = s.slice(0, firstDot + 1) + s.slice(firstDot + 1).replace(/\./g, "");
-  }
-  const [intPart, decPart] = s.split(".");
-  return decPart !== undefined ? `${intPart}.${decPart.slice(0, 2)}` : intPart;
-};
-
-const parseSanitizedToCents = (value) => {
-  if (!value) return 0;
-  const [intPartRaw, decPartRaw] = String(value).split(".");
-  const intPart = Number.parseInt(intPartRaw, 10);
-  if (!Number.isFinite(intPart)) return 0;
-
-  if (!decPartRaw) {
-    return intPart * 100;
-  }
-
-  const decimalsString = decPartRaw.padEnd(2, "0").slice(0, 2);
-  const decimals = Number.parseInt(decimalsString, 10);
-
-  return intPart * 100 + (Number.isFinite(decimals) ? decimals : 0);
-};
-
-const formatCents = (cents) => PRICE_DISPLAY_FORMATTER.format(cents / 100);
+const {
+  CALC_TITLE_BOLD,
+  CALC_TITLE_LIGHT,
+  LABEL_PRODUCT,
+  LABEL_PRICE,
+  ADD_ITEM,
+  REMOVE_ITEM,
+  CTA_TEXT,
+  TERMS_TEXT,
+  CTA_URL,
+  TERMS_URL,
+} = etLocale;
 
 export default function Calculator() {
   const [items, setItems] = useState([

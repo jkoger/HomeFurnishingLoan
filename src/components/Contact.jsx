@@ -2,15 +2,17 @@ import "./Contact.css";
 import call from "../assets/call.png";
 import drafts from "../assets/drafts.png";
 import support from "../assets/support.png";
+import etLocale from "../localization/default-et.json";
 
-const CONTACT_TITLE_LIGHT = "LHV";
-const CONTACT_TITLE_BOLD = "Klienditugi";
-const CONTACT_TEXT =
-  "Kui sul tekib pangateenuse kasutamisel probleeme, saad klienditoe infotelefonilt abi ööpäev ringi.";
-const TEL_NUMBER = "6 800 400";
-const TEL_HREF = "tel:6800400";
-const EMAIL = "info@lhv.ee";
-const EMAIL_HREF = "mailto:info@lhv.ee";
+const {
+  CONTACT_TITLE_LIGHT,
+  CONTACT_TITLE_BOLD,
+  CONTACT_TEXT,
+  TEL_NUMBER,
+  TEL_HREF,
+  EMAIL,
+  EMAIL_HREF,
+} = etLocale;
 
 function ContactRow({ icon, label, href, underline = false }) {
   return (
